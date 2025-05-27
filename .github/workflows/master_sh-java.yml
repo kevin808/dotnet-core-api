@@ -17,11 +17,6 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
-        with:
-          name: php-app
-
       - name: Enable run-from-package
         uses: azure/appservice-settings@v1
         with:
@@ -31,12 +26,3 @@ jobs:
             [
               { "name": "WEBSITE_RUN_FROM_PACKAGE", "value": "1" }
             ]
-
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
-        id: deploy-to-webapp
-        with:
-          app-name: 'sh-java'
-          slot-name: 'Production'
-          package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B2A38C31ABBC4D18BD0ABD74EDDAB3EA }}
